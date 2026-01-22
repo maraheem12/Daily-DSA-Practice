@@ -1,0 +1,52 @@
+class Solution {
+    public int get(char c, String row1, String row2, String row3){
+        if(row1.indexOf(c) != -1) return 1;
+        if(row2.indexOf(c) != -1) return 2;
+        return 3;
+    }
+    public String[] findWords(String[] words) {
+        String row1 = "qwertyuiopQWERTYUIOP";
+        String row2 = "asdfghjklASDFGHJKL";
+        String row3 = "zxcvbnmZXCVBNM";
+
+        ArrayList<String> res = new ArrayList<>();
+        for(String word: words){
+            int r = get(word.charAt(0), row1, row2, row3);
+            boolean add = true;
+            for(char c: word.toCharArray()){
+                if(get(c, row1, row2, row3) != r){
+                    add = false;
+                    break;
+                }
+            }
+            if(add){
+                res.add(word);
+            }
+        }
+        return res.toArray(new String[0]);
+    }
+}
+/*
+class Solution {
+    public String[] findWords(String[] words) {
+        ArrayList<String> res= new ArrayList<>();
+        HashSet<Character> set1 = new HashSet<>();
+        for(char c:"qwertyuiop".toCharArray()){
+            set1.add(c);
+        }
+        HashSet<Character> set2 = new HashSet<>();
+        for(char c:"asdfghjkl".toCharArray()){
+            set2.add(c);
+        }
+        HashSet<Character> set3 = new HashSet<>();
+        for(char c:"zxcvbnm".toCharArray()){
+            set3.add(c);
+        }
+        for(String word: words){
+            char ch[] = words.toLowerCase().toCharArray();
+            for()
+            
+        }
+    }
+}
+*/
