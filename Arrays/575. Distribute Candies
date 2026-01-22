@@ -1,0 +1,17 @@
+class Solution {
+    public int distributeCandies(int[] candyType) {
+        int n = candyType.length;
+        int max = n/2;
+        Arrays.sort(candyType);
+        int count = 1;
+        for(int i=1; i<n; i++){
+            if(max == count){
+                break;
+            }
+            if(candyType[i-1] != candyType[i]){
+                count++;
+            }
+        }
+        return count;
+    }
+}
