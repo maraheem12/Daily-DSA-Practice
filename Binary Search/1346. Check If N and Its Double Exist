@@ -1,0 +1,27 @@
+class Solution {
+    public boolean check(int arr[], int key, int l, int h){
+        while(l<=h){
+            int mid = (l+h)/2;
+            if(arr[mid] == key){
+                return true;
+            }
+            else if(arr[mid] < key){
+                l = mid+1;
+            }
+            else{
+                h = mid-1;
+            }
+        }
+        return false;
+    }
+    public boolean checkIfExist(int[] arr) {
+        Arrays.sort(arr);
+        int n = arr.length;
+        for(int i=0; i<n; i++){
+            if(check(arr, 2*arr[i], 0, i-1) || check(arr, 2*arr[i], i+1, n-1)){
+                return true;
+            }
+        }
+        return false;
+    }
+}
