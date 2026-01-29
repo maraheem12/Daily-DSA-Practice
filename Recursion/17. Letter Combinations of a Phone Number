@@ -1,0 +1,22 @@
+class Solution {
+
+    public void backtrack(String digits, String map[], StringBuilder curr, int idx, List<String> res){
+        if(idx == digits.length()){
+            res.add(curr.toString());
+            return;
+        }
+
+        String letters = map[digits.charAt(idx)-'0'];
+        for(char c: letters.toCharArray()){
+            curr.append(c); 
+            backtrack(digits, map, curr, idx+1, res);
+            curr.deleteCharAt(curr.length()-1);
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
+        String map[] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        backtrack(digits, map, new StringBuilder(), 0, res);
+        return res;
+    }
+}
