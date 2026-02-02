@@ -1,0 +1,30 @@
+class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        int totalSum = 0;
+        for (int x : nums) totalSum += x;
+
+        int offset = totalSum;
+        int[][] dp = new int[nums.length][2 * totalSum + 1];
+
+        for (int i = 0; i < nums.length; i++) {
+            Arrays.fill(dp[i], Integer.MIN_VALUE);
+        }
+
+        return dfs(nums, 0, 0, target, dp, offset);
+    }
+
+    private int dfs(int[] nums, int index, int sum, int target, int[][] dp, int offset) {
+        if (index == nums.length) {
+            return sum == target ? 1 : 0;
+        }
+
+        if (dp[index][sum + offset] != Integer.MIN_VALUE) {
+            return dp[index][sum + offset];
+        }
+
+        int add = dfs(nums, index + 1, sum + nums[index], target, dp, offset);
+        int sub = dfs(nums, index + 1, sum - nums[index], target, dp, offset);
+
+        return dp[index][sum + offset] = add + sub;
+    }
+}
