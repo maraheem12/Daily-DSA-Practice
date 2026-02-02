@@ -1,0 +1,86 @@
+class Solution {
+    public int backtrack(int nums[], int amount, int idx, int dp[][]){
+        if(idx==0){
+            if(amount%nums[0] == 0) return amount/nums[0];
+            return (int)1e9;
+        }
+        if(dp[idx][amount] != -1){
+            return dp[idx][amount];
+        }
+
+        int notPick =  backtrack(nums, amount, idx-1, dp);
+        int pick = (int)1e9;
+        if(nums[idx]<=amount){
+            pick = 1+backtrack(nums, amount-nums[idx], idx, dp);
+        }
+
+        dp[idx][amount] = Math.min(pick, notPick);
+        return dp[idx][amount];
+    }
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int dp[][] = new int[n][amount+1];
+        // for(int i=0; i<n; i++){
+        //     Arrays.fill(dp[i], -1);
+        // }
+        // int res = backtrack(coins, amount, n-1, dp);
+        int store=0;
+        for(int i = 0; i <= amount; i++){
+            if(i % coins[0] == 0)
+                dp[0][i] = i / coins[0];
+            else
+                dp[0][i] = (int)1e9;
+}
+
+        for(int i=1; i<n; i++){
+            for(int target = 0; target<=amount; target++){
+                int notPick =  dp[i-1][target];
+                int pick = (int)1e9;
+                if(coins[i]<=target){
+                    pick = 1+dp[i][target-coins[i]];
+                    
+                }
+                dp[i][target] = Math.min(pick, notPick);
+            }
+        }
+        return (dp[n-1][amount] >= (int)1e9)? -1:dp[n-1][amount];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        Arrays.sort(coins);
+        int n = coins.length;
+        int min = 0;
+        for(int i=n-1; i>=0; i--){
+            int num = amount/coins[i];
+            if(amount == 0){
+                return min;
+            }
+            if(num > 0){
+                min += num;
+                amount -= num*coins[i];
+            }
+        }
+        return (amount==0)? min:-1;
+    }
+}
+*/
