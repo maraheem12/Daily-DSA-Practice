@@ -1,0 +1,39 @@
+class Solution {
+    public int minimumDifference(int[] nums) {
+        int n = nums.length;
+        int minSum = 0, maxSum = 0;
+        for (int x : nums) {
+            if (x < 0) minSum += x;
+            else maxSum += x;
+        }
+
+        int range = maxSum - minSum;
+        boolean[] dp = new boolean[range + 1];
+        
+        int offset = -minSum; 
+        dp[offset] = true;
+
+        for (int num : nums) {
+            if (num > 0) {
+                for (int j = range; j >= num; j--) {
+                    if (dp[j - num]) dp[j] = true;
+                }
+            } else {
+                for (int j = 0; j <= range + num; j++) {
+                    if (dp[j - num]) dp[j] = true;
+                }
+            }
+        }
+
+        int totalSum = maxSum + minSum;
+        int minDiff = Integer.MAX_VALUE;
+        for (int i = 0; i <= range; i++) {
+            if (dp[i]) {
+                int s1 = i - offset;
+                int s2 = totalSum - s1;
+                minDiff = Math.min(minDiff, Math.abs(s1 - s2));
+            }
+        }
+        return minDiff;
+    }
+}
