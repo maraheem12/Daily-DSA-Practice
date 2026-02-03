@@ -1,0 +1,32 @@
+class Solution {
+    public int backtrack(String s1, String s2, int n, int m, int dp[][]){
+        if(n==0 || m==0){
+            return 0;
+        }
+        if(dp[n][m] != -1){
+            return dp[n][m];
+        }
+        if(s1.charAt(n-1) == s2.charAt(m-1)){
+            return dp[n][m] = 1+backtrack(s1, s2, n-1, m-1, dp);
+        }
+
+        int left = backtrack(s1, s2, n, m-1, dp);
+        int right = backtrack(s1, s2, n-1, m, dp);
+
+        return dp[n][m] = Math.max(left, right);
+    }
+    public int LCS(String s1, String s2){
+        int n = s1.length();
+        int m = s2.length();
+        int dp[][] = new int[n+1][m+1];
+        for(int i[]: dp){
+            Arrays.fill(i, -1);
+        }
+        return backtrack(s1, s2, n, m, dp);
+    }
+    public int longestPalindromeSubseq(String s) {
+        String s1= s;
+        String s2 = new StringBuilder(s).reverse().toString();
+        return LCS(s1,s2);
+    }
+}
