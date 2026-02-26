@@ -1,0 +1,25 @@
+class Solution {
+    int sum = 0;
+
+    public void preorder(TreeNode root, StringBuilder curr) {
+        if (root == null) return;
+
+        curr.append(root.val);
+
+        
+        if (root.left == null && root.right == null) {
+            int num = Integer.parseInt(curr.toString(), 2);
+            sum += num;
+        } else {
+            preorder(root.left, curr);
+            preorder(root.right, curr);
+        }
+
+        curr.deleteCharAt(curr.length() - 1); 
+    }
+
+    public int sumRootToLeaf(TreeNode root) {
+        preorder(root, new StringBuilder());
+        return sum;
+    }
+}
