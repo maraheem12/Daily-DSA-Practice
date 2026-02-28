@@ -1,0 +1,31 @@
+class Solution {
+    Map<String, Integer> memo = new HashMap<>();
+
+    public int recursions(int[] nums, long k, long val, int idx, int n){
+        if(idx == n){
+            return val == k ? 1 : 0;
+        }
+
+        String key = idx + "," + val;
+        if(memo.containsKey(key)) return memo.get(key);
+
+        int count = 0;
+
+        if(nums[idx] != 0 && val <= k && val <= k / nums[idx]){
+            count += recursions(nums, k, val * nums[idx], idx + 1, n);
+        }
+
+        if(nums[idx] != 0 && val % nums[idx] == 0){
+            count += recursions(nums, k, val / nums[idx], idx + 1, n);
+        }
+
+        count += recursions(nums, k, val, idx + 1, n);
+
+        memo.put(key, count);
+        return count;
+    }
+
+    public int countSequences(int[] nums, long k) {
+        return recursions(nums, k, 1, 0, nums.length);
+    }
+}
