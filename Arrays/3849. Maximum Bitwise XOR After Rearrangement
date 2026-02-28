@@ -1,0 +1,36 @@
+class Solution {
+    public String maximumXor(String s, String t) {
+        int zeros = 0;
+        int ones = 0;
+        StringBuilder res = new StringBuilder();
+        for(char c: t.toCharArray()){
+            if(c=='0'){
+                zeros++;
+            }
+            else{
+                ones++;
+            }
+        }
+        for(char c: s.toCharArray()){
+            if(c=='0'){
+                if(ones > 0){
+                    res.append(1);
+                    ones--;
+                }
+                else{
+                    res.append(0);
+                }
+            }
+            else{
+                if(zeros > 0){
+                    res.append(1);
+                    zeros--;
+                }
+                else{
+                    res.append(0);
+                }
+            }
+        }
+        return res.toString();
+    }
+}
