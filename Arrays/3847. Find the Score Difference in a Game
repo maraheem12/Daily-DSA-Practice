@@ -1,0 +1,29 @@
+class Solution {
+    public int scoreDifference(int[] nums) {
+        int n = nums.length;
+        boolean fa = true;
+        boolean sa = false;
+        int fs = 0;
+        int ss=0;
+        int game=0;
+
+        for(int i=0; i<n; i++){
+            game++;
+            if(game%6 == 0){
+                fa = !fa;
+                sa = !sa;
+            }
+            if(nums[i]%2 != 0){
+                fa = !fa;
+                sa = !sa;
+            }
+            if(fa){
+                fs += nums[i];
+            }
+            else{
+                ss += nums[i];
+            }
+        }
+        return fs-ss;
+    }
+}
