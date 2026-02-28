@@ -1,0 +1,28 @@
+class Solution {
+    public boolean isDigitorialPermutation(int n) {
+        int[] digitorial = {1, 2, 145, 40585};
+        
+        int[] freqN = getFreq(n);
+        
+        for(int num : digitorial){
+            if(same(freqN, getFreq(num))) return true;
+        }
+        return false;
+    }
+    
+    private int[] getFreq(int n){
+        int[] freq = new int[10];
+        while(n > 0){
+            freq[n % 10]++;
+            n /= 10;
+        }
+        return freq;
+    }
+    
+    private boolean same(int[] a, int[] b){
+        for(int i = 0; i < 10; i++){
+            if(a[i] != b[i]) return false;
+        }
+        return true;
+    }
+}
