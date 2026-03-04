@@ -1,0 +1,28 @@
+class Solution {
+    public int solve(String s, int idx, int n, int dp[]){
+        if(idx == n){
+            return 1;
+        }
+        if(s.charAt(idx) == '0'){
+            return 0;
+        }
+        if(dp[idx] != -1){
+            return dp[idx];
+        }
+        int count = solve(s, idx+1, n, dp);
+
+        if(idx+1 < n){
+            int num = Integer.parseInt(s.substring(idx, idx+2));
+            if(num >= 10 && num <=26){
+                count += solve(s, idx+2, n, dp);
+            }
+        }
+        return dp[idx] = count;
+    }
+    public int numDecodings(String s) {
+        int n = s.length();
+        int dp[] = new int[n+1];
+        Arrays.fill(dp, -1);
+        return solve(s, 0, n, dp);
+    }
+}
