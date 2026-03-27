@@ -1,0 +1,33 @@
+class Solution {
+    int binarySearch(int pre[], int target){
+        int l = 0;
+        int h = pre.length-1;
+        int res=0;
+        while(l<=h){
+            int mid = (l+h)/2;
+            if(pre[mid] <= target){
+                res = mid+1;
+                l = mid+1;
+            }
+            else{
+                h = mid-1;
+            }
+        }
+        return res;
+    }
+    public int[] answerQueries(int[] nums, int[] queries) {
+        int n = nums.length;
+        int m = queries.length;
+        int pre[] = new int[n];
+        Arrays.sort(nums);
+        pre[0] = nums[0];
+        for(int i=1; i<n; i++){
+            pre[i] = pre[i-1]+nums[i];
+        }
+        int res[] = new int[m];
+        for(int i=0; i<m; i++){
+            res[i] = binarySearch(pre, queries[i]);
+        }
+        return res;
+    }
+}
