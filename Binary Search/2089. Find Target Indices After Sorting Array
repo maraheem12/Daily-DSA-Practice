@@ -1,0 +1,30 @@
+class Solution {
+    public List<Integer> targetIndices(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int l=0;
+        int h=n-1;
+        List<Integer> res = new ArrayList<>();
+
+        while(l<=h){
+            int mid = (l+h)/2;
+            if(nums[mid] == target){
+                int i = mid;
+                while (i >= 0 && nums[i] == target) i--;
+
+                for (int j = i + 1; j < n && nums[j] == target; j++) {
+                    res.add(j);
+                }
+                break;
+            }
+            else if(nums[mid] > target){
+                h = mid-1;
+            }
+            else{
+                l = mid+1;
+            }
+        }
+        return res;
+
+    }
+}
