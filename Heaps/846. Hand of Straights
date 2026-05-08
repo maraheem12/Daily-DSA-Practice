@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        int n = hand.length;
+        if(n%groupSize != 0) return false;
+
+        PriorityQueue<Integer> min = new PriorityQueue<>();
+        for(int i=0; i<n; i++){
+            min.add(hand[i]);
+        }
+        while(!min.isEmpty()){
+            int block = 1;
+            int curr = min.poll();
+            ArrayList<Integer> temp = new ArrayList<>();
+            while(block != groupSize){
+                if(!min.isEmpty() && min.peek() == curr+1){
+                    curr = min.poll();
+                    block++;
+                }
+                else if(!min.isEmpty()){
+                    temp.add(min.poll());
+                }
+                if(block != groupSize && min.isEmpty()) return false;
+            }
+            for(int c: temp){
+                min.add(c);
+            }
+        }
+        return true;
+    }
+}
