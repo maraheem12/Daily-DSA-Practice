@@ -1,0 +1,49 @@
+class Solution {
+    public int n;
+    public int m;
+    public int budget;
+    public int[][] items;
+    int free[];
+    boolean mask[];
+    public int backtrack(int i, int b, int copies) {
+        if(i == n){
+            return copies;
+        }
+
+        int take = 0;
+        if(b+items[i][1] <= budget){
+            boolean addedFree = false;
+
+            if(!mask[i]){
+                mask[i] = true;
+                addedFree = true;
+                take = backtrack(i, b + items[i][1], copies + 1 + free[i]);
+            } else {
+                take = backtrack(i, b + items[i][1], copies + 1);
+            }
+            if(addedFree){
+                mask[i] = false;
+            }
+        }
+        
+        int notTake = backtrack(i+1, b, copies);
+        return Math.max(take, notTake);
+    }
+    public int maximumSaleItems(int[][] items, int budget) {
+        n = items.length;
+        m = items[0].length;
+        this.budget = budget;
+        this.items = items;
+        free = new int[n];
+        mask = new boolean[n];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(i != j && items[j][0]%items[i][0] == 0){
+                    free[i]++;
+                }
+            } 
+        }
+
+        return backtrack(0, 0, 0);
+    }
+}
