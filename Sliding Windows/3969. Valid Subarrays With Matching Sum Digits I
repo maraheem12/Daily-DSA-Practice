@@ -1,0 +1,26 @@
+class Solution {
+    public boolean valid(long sum, int x){
+        long last = sum%10;
+        long first = 0;
+        while(sum > 0){
+            first = sum%10;
+            sum = sum/10;
+        }
+        if(first !=x || last != x){
+            return false;
+        }
+        return true;
+    }
+    public int countValidSubarrays(int[] nums, int x) {
+        int n = nums.length;
+        int ans=0;
+        for(int i=0; i<n; i++){
+            long sum = 0;
+            for(int j=i; j<n; j++){
+                sum += nums[j];
+                ans += (valid(sum, x))? 1:0;     
+            }
+        }
+        return ans;
+    }
+}
